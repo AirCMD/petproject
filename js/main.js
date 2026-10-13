@@ -14,29 +14,32 @@ setTheme(savedTheme);
 themeToggle.addEventListener('click', () => {
   const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
   setTheme(next);
+  setTimeout(updateDoodleColor, 50);
 });
 
 /* ========== MOBILE MENU ========== */
 const burger = document.getElementById('burger');
-const nav = document.querySelector('.nav');
+const hudBar = document.querySelector('.hud-bar');
 
 burger.addEventListener('click', () => {
-  nav.classList.toggle('open');
+  hudBar.classList.toggle('open');
 });
 
-document.querySelectorAll('.nav-links a').forEach(link => {
-  link.addEventListener('click', () => nav.classList.remove('open'));
+document.querySelectorAll('.hud-link').forEach(link => {
+  link.addEventListener('click', () => hudBar.classList.remove('open'));
 });
 
 /* ========== SEARCH ========== */
 const searchToggle = document.getElementById('search-toggle');
 const searchPanel = document.getElementById('search-panel');
+const searchClose = document.getElementById('search-close');
 const searchInput = document.getElementById('search-input');
 const searchResults = document.getElementById('search-results');
 
 const searchable = [];
 
 function collectSearchable() {
+  searchable.length = 0;
   document.querySelectorAll('[data-search]').forEach(el => {
     const text = (el.querySelector('h3')?.textContent || '') + ' ' +
                  (el.querySelector('p')?.textContent || '') + ' ' +
@@ -44,21 +47,28 @@ function collectSearchable() {
     searchable.push({
       el,
       text: text.toLowerCase(),
-      title: el.querySelector('h3')?.textContent || 'Елемент',
-      section: el.closest('section')?.id || ''
+      title: el.querySelector('h3')?.textContent || 'ITEM'
     });
   });
 }
 
+function openSearch() {
+  searchPanel.classList.add('open');
+  searchInput.focus();
+}
+
+function closeSearch() {
+  searchPanel.classList.remove('open');
+  searchResults.innerHTML = '';
+  searchInput.value = '';
+}
+
 searchToggle.addEventListener('click', () => {
-  searchPanel.classList.toggle('open');
-  if (searchPanel.classList.contains('open')) {
-    searchInput.focus();
-  } else {
-    searchResults.innerHTML = '';
-    searchInput.value = '';
-  }
+  if (searchPanel.classList.contains('open')) closeSearch();
+  else openSearch();
 });
+
+if (searchClose) searchClose.addEventListener('click', closeSearch);
 
 searchInput.addEventListener('input', () => {
   const q = searchInput.value.trim().toLowerCase();
@@ -73,17 +83,23 @@ searchInput.addEventListener('input', () => {
     div.innerHTML = item.title.replace(regex, '<mark>$1</mark>');
     div.addEventListener('click', () => {
       item.el.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      searchPanel.classList.remove('open');
-      searchInput.value = '';
-      searchResults.innerHTML = '';
-      item.el.style.outline = '2px solid var(--accent)';
+      closeSearch();
+      item.el.style.outline = '2px solid var(--neon)';
       setTimeout(() => item.el.style.outline = '', 1500);
     });
     searchResults.appendChild(div);
   });
 
   if (matches.length === 0) {
-    searchResults.innerHTML = '<div class="search-result">Нічого не знайдено</div>';
+    searchResults.innerHTML = '<div class="search-result">NO RESULTS FOUND</div>';
+  }
+});
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeSearch();
+  if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+    e.preventDefault();
+    openSearch();
   }
 });
 
@@ -107,17 +123,14 @@ function resizeDoodle() {
 
 function updateDoodleColor() {
   const isDark = html.getAttribute('data-theme') === 'dark';
-  dCtx.strokeStyle = isDark ? '#e8eaf0' : '#1a1c23';
+  dCtx.strokeStyle = isDark ? '#00f0ff' : '#0066ff';
 }
 
 function getPos(e) {
   const rect = doodle.getBoundingClientRect();
   const clientX = e.touches ? e.touches[0].clientX : e.clientX;
   const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-  return {
-    x: clientX - rect.left,
-    y: clientY - rect.top
-  };
+  return { x: clientX - rect.left, y: clientY - rect.top };
 }
 
 function startDraw(e) {
@@ -140,9 +153,7 @@ function draw(e) {
   lastY = pos.y;
 }
 
-function stopDraw() {
-  drawing = false;
-}
+function stopDraw() { drawing = false; }
 
 doodle.addEventListener('mousedown', startDraw);
 doodle.addEventListener('mousemove', draw);
@@ -153,90 +164,17 @@ doodle.addEventListener('touchmove', draw, { passive: false });
 doodle.addEventListener('touchend', stopDraw);
 
 window.addEventListener('resize', resizeDoodle);
-themeToggle.addEventListener('click', () => setTimeout(updateDoodleColor, 50));
 
-/* ========== SHOP DATA & RENDER ========== */
+/* ========== INVENTORY / SHOP ========== */
 const shopItems = [
-  {
-    id: 1,
-    title: 'Organic Brushes Pack',
-    desc: '24 природні пензлі: акварель, вугілля, суха пастель. Повна підтримка тиску.',
-    category: 'brushes',
-    size: '18 MB',
-    downloads: '4.2k',
-    hue: 200,
-    label: 'Brushes'
-  },
-  {
-    id: 2,
-    title: 'Paper Textures Vol.1',
-    desc: '12 високоякісних текстур паперу: крафт, акварельний, газетний, лляний.',
-    category: 'textures',
-    size: '42 MB',
-    downloads: '3.1k',
-    hue: 30,
-    label: 'Textures'
-  },
-  {
-    id: 3,
-    title: 'Comic Panel Templates',
-    desc: 'Готові шаблони комікс-сторінок з різними розкладками панелей.',
-    category: 'templates',
-    size: '8 MB',
-    downloads: '2.8k',
-    hue: 340,
-    label: 'Templates'
-  },
-  {
-    id: 4,
-    title: 'Ink & Line Set',
-    desc: 'Пензлі для лінійної графіки, туш, перо, рапідограф. Ідеально для ілюстрацій.',
-    category: 'brushes',
-    size: '11 MB',
-    downloads: '5.6k',
-    hue: 260,
-    label: 'Brushes'
-  },
-  {
-    id: 5,
-    title: 'Grain & Noise Pack',
-    desc: 'Текстури шуму, плівки, зерна. Додай атмосферу будь-якому малюнку.',
-    category: 'textures',
-    size: '27 MB',
-    downloads: '1.9k',
-    hue: 160,
-    label: 'Textures'
-  },
-  {
-    id: 6,
-    title: 'Storyboard Kit',
-    desc: 'Шаблони для розкадрування: 16:9, 4:3, вертикальні формати.',
-    category: 'templates',
-    size: '5 MB',
-    downloads: '3.4k',
-    hue: 50,
-    label: 'Templates'
-  },
-  {
-    id: 7,
-    title: 'Watercolor Dreams',
-    desc: 'М\'які акварельні пензлі з реалістичним розтіканням пігменту.',
-    category: 'brushes',
-    size: '22 MB',
-    downloads: '6.1k',
-    hue: 320,
-    label: 'Brushes'
-  },
-  {
-    id: 8,
-    title: 'Urban Sketch Stamps',
-    desc: 'Штампи архітектурних елементів, дерев, людей для швидких скетчів.',
-    category: 'templates',
-    size: '15 MB',
-    downloads: '2.2k',
-    hue: 10,
-    label: 'Stamps'
-  }
+  { id:1, title:'ORGANIC BRUSHES', desc:'24 природні пензлі: акварель, вугілля, пастель. Повна підтримка тиску.', category:'brushes', size:'18 MB', downloads:'4.2K', hue:180, icon:'🖌️', rarity:'legendary' },
+  { id:2, title:'PAPER TEXTURES', desc:'12 текстур паперу: крафт, акварельний, газетний, лляний.', category:'textures', size:'42 MB', downloads:'3.1K', hue:30, icon:'📄', rarity:'epic' },
+  { id:3, title:'COMIC TEMPLATES', desc:'Готові шаблони комікс-сторінок з різними розкладками панелей.', category:'templates', size:'8 MB', downloads:'2.8K', hue:340, icon:'📰', rarity:'rare' },
+  { id:4, title:'INK & LINE SET', desc:'Пензлі для лінійної графіки, туш, перо, рапідограф.', category:'brushes', size:'11 MB', downloads:'5.6K', hue:260, icon:'✒️', rarity:'legendary' },
+  { id:5, title:'GRAIN & NOISE', desc:'Текстури шуму, плівки, зерна. Додай атмосферу будь-якому малюнку.', category:'textures', size:'27 MB', downloads:'1.9K', hue:160, icon:'🌫️', rarity:'epic' },
+  { id:6, title:'STORYBOARD KIT', desc:'Шаблони для розкадрування: 16:9, 4:3, вертикальні формати.', category:'templates', size:'5 MB', downloads:'3.4K', hue:50, icon:'🎬', rarity:'rare' },
+  { id:7, title:'WATERCOLOR DREAMS', desc:'М\'які акварельні пензлі з реалістичним розтіканням пігменту.', category:'brushes', size:'22 MB', downloads:'6.1K', hue:320, icon:'💧', rarity:'legendary' },
+  { id:8, title:'URBAN STAMPS', desc:'Штампи архітектурних елементів, дерев, людей для швидких скетчів.', category:'templates', size:'15 MB', downloads:'2.2K', hue:10, icon:'🏙️', rarity:'epic' }
 ];
 
 const shopGrid = document.getElementById('shop-grid');
@@ -247,96 +185,102 @@ function renderShop(filter = 'all') {
 
   items.forEach(item => {
     const card = document.createElement('article');
-    card.className = 'shop-card';
+    card.className = 'inv-card';
     card.dataset.search = `${item.title} ${item.desc} ${item.category}`;
     card.innerHTML = `
-      <div class="shop-preview" style="--hue: ${item.hue}" data-label="${item.label}"></div>
-      <div class="shop-body">
+      <span class="inv-rarity ${item.rarity}">${item.rarity.toUpperCase()}</span>
+      <div class="inv-preview" style="--hue:${item.hue}" data-icon="${item.icon}"></div>
+      <div class="inv-body">
         <h3>${item.title}</h3>
         <p>${item.desc}</p>
-        <div class="shop-meta">
+        <div class="inv-meta">
           <span>${item.size}</span>
           <span>↓ ${item.downloads}</span>
         </div>
-        <a href="#" class="btn btn-primary btn-sm" onclick="event.preventDefault(); alert('Завантаження: ${item.title}\\n(У реальному проєкті тут буде файл з GitHub Releases)')">
-          Завантажити
+        <a href="#" class="inv-download" onclick="event.preventDefault();alert('DOWNLOAD: ${item.title}\\n(Connect to GitHub Releases)')">
+          ↓ EQUIP / DOWNLOAD
         </a>
       </div>
     `;
     shopGrid.appendChild(card);
   });
-
-  // re-collect searchable after render
   collectSearchable();
 }
 
-document.querySelectorAll('.filter-btn').forEach(btn => {
+document.querySelectorAll('.filter-chip').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
     renderShop(btn.dataset.filter);
   });
 });
 
-/* ========== INK PARTICLES ========== */
-const inkCanvas = document.getElementById('ink-canvas');
-const iCtx = inkCanvas.getContext('2d');
-let particles = [];
-let w, h;
+/* ========== STARFIELD ========== */
+const starCanvas = document.getElementById('starfield');
+const sCtx = starCanvas.getContext('2d');
+let stars = [];
+let sw, sh;
 
-function resizeInk() {
-  w = inkCanvas.width = window.innerWidth;
-  h = inkCanvas.height = window.innerHeight;
+function resizeStars() {
+  sw = starCanvas.width = window.innerWidth;
+  sh = starCanvas.height = window.innerHeight;
 }
 
-function createParticle() {
-  return {
-    x: Math.random() * w,
-    y: Math.random() * h,
-    r: Math.random() * 1.8 + 0.4,
-    vx: (Math.random() - 0.5) * 0.3,
-    vy: (Math.random() - 0.5) * 0.3,
-    alpha: Math.random() * 0.35 + 0.05
-  };
+function initStars() {
+  stars = [];
+  const count = Math.min(80, Math.floor((sw * sh) / 14000));
+  for (let i = 0; i < count; i++) {
+    stars.push({
+      x: Math.random() * sw,
+      y: Math.random() * sh,
+      r: Math.random() * 1.5 + 0.3,
+      speed: Math.random() * 0.4 + 0.1,
+      alpha: Math.random() * 0.5 + 0.1
+    });
+  }
 }
 
-function initParticles() {
-  particles = [];
-  const count = Math.min(60, Math.floor((w * h) / 18000));
-  for (let i = 0; i < count; i++) particles.push(createParticle());
-}
-
-function drawParticles() {
-  iCtx.clearRect(0, 0, w, h);
+function drawStars() {
+  sCtx.clearRect(0, 0, sw, sh);
   const isDark = html.getAttribute('data-theme') === 'dark';
-  const color = isDark ? '124, 156, 255' : '61, 90, 254';
+  const color = isDark ? '0, 240, 255' : '0, 102, 255';
 
-  particles.forEach(p => {
-    p.x += p.vx;
-    p.y += p.vy;
-    if (p.x < 0 || p.x > w) p.vx *= -1;
-    if (p.y < 0 || p.y > h) p.vy *= -1;
-
-    iCtx.beginPath();
-    iCtx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    iCtx.fillStyle = `rgba(${color}, ${p.alpha})`;
-    iCtx.fill();
+  stars.forEach(s => {
+    s.y += s.speed;
+    if (s.y > sh) { s.y = 0; s.x = Math.random() * sw; }
+    sCtx.beginPath();
+    sCtx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    sCtx.fillStyle = `rgba(${color}, ${s.alpha})`;
+    sCtx.fill();
   });
-
-  requestAnimationFrame(drawParticles);
+  requestAnimationFrame(drawStars);
 }
 
 window.addEventListener('resize', () => {
-  resizeInk();
-  initParticles();
+  resizeStars();
+  initStars();
+});
+
+/* ========== ACTIVE NAV ON SCROLL ========== */
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.hud-link');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(sec => {
+    if (window.scrollY >= sec.offsetTop - 120) current = sec.id;
+  });
+  navLinks.forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === '#' + current);
+  });
 });
 
 /* ========== INIT ========== */
 window.addEventListener('load', () => {
   resizeDoodle();
-  resizeInk();
-  initParticles();
-  drawParticles();
+  resizeStars();
+  initStars();
+  drawStars();
   renderShop();
   collectSearchable();
 });
