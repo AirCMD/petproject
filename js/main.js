@@ -167,14 +167,14 @@ window.addEventListener('resize', resizeDoodle);
 
 /* ========== INVENTORY / SHOP ========== */
 const shopItems = [
-  { id:1, title:'ORGANIC BRUSHES', desc:'24 природні пензлі: акварель, вугілля, пастель. Повна підтримка тиску.', category:'brushes', size:'18 MB', downloads:'4.2K', hue:180, icon:'🖌️', rarity:'legendary' },
-  { id:2, title:'PAPER TEXTURES', desc:'12 текстур паперу: крафт, акварельний, газетний, лляний.', category:'textures', size:'42 MB', downloads:'3.1K', hue:30, icon:'📄', rarity:'epic' },
-  { id:3, title:'COMIC TEMPLATES', desc:'Готові шаблони комікс-сторінок з різними розкладками панелей.', category:'templates', size:'8 MB', downloads:'2.8K', hue:340, icon:'📰', rarity:'rare' },
-  { id:4, title:'INK & LINE SET', desc:'Пензлі для лінійної графіки, туш, перо, рапідограф.', category:'brushes', size:'11 MB', downloads:'5.6K', hue:260, icon:'✒️', rarity:'legendary' },
-  { id:5, title:'GRAIN & NOISE', desc:'Текстури шуму, плівки, зерна. Додай атмосферу будь-якому малюнку.', category:'textures', size:'27 MB', downloads:'1.9K', hue:160, icon:'🌫️', rarity:'epic' },
-  { id:6, title:'STORYBOARD KIT', desc:'Шаблони для розкадрування: 16:9, 4:3, вертикальні формати.', category:'templates', size:'5 MB', downloads:'3.4K', hue:50, icon:'🎬', rarity:'rare' },
-  { id:7, title:'WATERCOLOR DREAMS', desc:'М\'які акварельні пензлі з реалістичним розтіканням пігменту.', category:'brushes', size:'22 MB', downloads:'6.1K', hue:320, icon:'💧', rarity:'legendary' },
-  { id:8, title:'URBAN STAMPS', desc:'Штампи архітектурних елементів, дерев, людей для швидких скетчів.', category:'templates', size:'15 MB', downloads:'2.2K', hue:10, icon:'🏙️', rarity:'epic' }
+  { id:1, title:'БАЗОВІ ПЕНЗЛІ', desc:'Круглі тверді/м\'які, олівець, гумка. Підтримка натиску й тонких розмірів 0,1–0,9 px.', category:'brushes', size:'вбудовано', downloads:'core', hue:180, icon:'🖌️', rarity:'legendary' },
+  { id:2, title:'ШТАМПИ · ВІДСТАНЬ', desc:'Параметр «Відстань відбитків» для окремих штампів (100–200 %+). Зберігається в .miymbrushes.', category:'brushes', size:'вбудовано', downloads:'2.128', hue:200, icon:'🔖', rarity:'epic' },
+  { id:3, title:'ШТАМПИ · РОЗКИД', desc:'Розкид відбитків від траєкторії + випадковий поворот. Для різноманітних штрихів і текстур.', category:'brushes', size:'вбудовано', downloads:'2.128', hue:320, icon:'✨', rarity:'epic' },
+  { id:4, title:'НАБІР .MIYMBRUSHES', desc:'Формат власних пензлів Малювачки. Імпорт/експорт наборів з параметрами форми.', category:'brushes', size:'—', downloads:'format', hue:260, icon:'📦', rarity:'rare' },
+  { id:5, title:'ПРИКЛАД КОМІКСУ', desc:'Багатосторінковий .miym з панелями. Експорт у PDF прямо з програми.', category:'templates', size:'приклад', downloads:'demo', hue:40, icon:'📰', rarity:'rare' },
+  { id:6, title:'ПРИКЛАД РІГУ', desc:'Персонаж із суглобами на шарах. Ключові пози + «Переходи…» для плавного руху.', category:'templates', size:'приклад', downloads:'demo', hue:140, icon:'🦴', rarity:'legendary' },
+  { id:7, title:'PSD ТЕСТОВИЙ', desc:'RGB 8-bit зі шарами й папкою — перевірка імпорту/експорту PSD.', category:'templates', size:'приклад', downloads:'demo', hue:20, icon:'💾', rarity:'rare' },
+  { id:8, title:'ДОКУМЕНТАЦІЯ 2.128', desc:'Текстові гайди зі збірки: пензлі, анімація, штампи, PSD, вікна малюнків.', category:'textures', size:'txt', downloads:'bundle', hue:90, icon:'📜', rarity:'epic' }
 ];
 
 const shopGrid = document.getElementById('shop-grid');

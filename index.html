@@ -1,797 +1,378 @@
 <!DOCTYPE html>
-
 <html lang="uk" data-theme="dark">
-
 <head>
-
-  <meta charset="UTF-8" />
-
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-  <title>МАЛЮВАЧКА</title>
-
-  <meta name="description" content="Малювачка — цифровий інструмент малювання у стилі відеогри. Завантажуй, грай, твори." />
-
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
-
-  <link rel="stylesheet" href="css/styles.css" />
-
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>МАЛЮВАЧКА // DRAW.EXE</title>
+  <meta name="description" content="Малювачка 2.128 — соло-проєкт цифрового малювання: пензлі, шари, вектори, анімація з суглобами, комікси, PSD. Portable для Windows." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@400;500;600;700&family=Press+Start+2P&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/styles.css" />
 </head>
-
 <body>
-
-  <!-- Лінії сканування та накладання ЕПТ -->
-
-  <div class="crt-overlay" aria-hidden="true"></div>
-
-  <canvas id="starfield" aria-hidden="true"></canvas>
-
-
-
-  <!-- Верхня панель інтерфейсу -->
-
-  <header class="hud-bar">
-
-    <div class="hud-left">
-
-      <span class="hud-logo">
-
-        <span class="logo-bracket">[</span>
-
-        <span class="logo-text">DRAW.EXE</span>
-
-        <span class="logo-bracket">]</span>
-
-      </span>
-
-      <span class="hud-status">
-
-        <span class="status-dot"></span>
-
-        У МЕРЕЖІ
-
-      </span>
-
-    </div>
-
-
-
-    <nav class="hud-nav">
-
-      <a href="#hero" class="hud-link active" data-section="hero">ПОЧАТОК</a>
-
-      <a href="#features" class="hud-link" data-section="features">МОЖЛИВОСТІ</a>
-
-      <a href="#about" class="hud-link" data-section="about">ПРО ПРОГРАМУ</a>
-
-      <a href="#docs" class="hud-link" data-section="docs">ПОСІБНИК</a>
-
-      <a href="#shop" class="hud-link" data-section="shop">РЕСУРСИ</a>
-
-      <a href="#gallery" class="hud-link" data-section="gallery">ГАЛЕРЕЯ</a>
-
-    </nav>
-
-
-
-    <div class="hud-right">
-
-      <button class="hud-btn" id="search-toggle" title="Пошук">
-
-        <span class="hud-btn-icon">⌕</span>
-
-      </button>
-
-      <button class="hud-btn" id="theme-toggle" title="Тема оформлення">
-
-        <span class="theme-icon-dark">☾</span>
-
-        <span class="theme-icon-light">☀</span>
-
-      </button>
-
-      <a href="#download" class="hud-cta">ЗАВАНТАЖИТИ</a>
-
-      <button class="burger" id="burger" aria-label="Меню">
-
-        <span></span><span></span><span></span>
-
-      </button>
-
-    </div>
-
-  </header>
-
-
-
-  <!-- Вікно пошуку -->
-
-  <div class="search-terminal" id="search-panel">
-
-    <div class="terminal-header">
-
-      <span>> ПОШУК_У_БАЗІ.ДАНИХ</span>
-
-      <button class="terminal-close" id="search-close">×</button>
-
-    </div>
-
-    <input type="search" id="search-input" placeholder="Введіть запит..." autocomplete="off" />
-
-    <div class="search-results" id="search-results"></div>
-
-  </div>
-
-
-
-  <main>
-
-    <!-- Головний екран -->
-
-    <section id="hero" class="section hero">
-
-      <div class="hero-bg-grid"></div>
-
-      <div class="hero-content">
-
-        <div class="level-badge">РІВЕНЬ 99 · ТВОРЕЦЬ</div>
-
-        <h1 class="glitch" data-text="МАЛЮВАЧКА">МАЛЮВАЧКА</h1>
-
-        <p class="hero-tagline">НАТИСНИ, ЩОБ ТВОРИТИ</p>
-
-        <p class="hero-desc">
-
-          Відкритий інструмент цифрового малювання.<br/>
-
-          Без підписок. Без лімітів. Тільки ти і полотно.
-
-        </p>
-
-        <div class="hero-buttons">
-
-          <a href="#download" class="game-btn primary">
-
-            <span class="btn-glow"></span>
-
-            ▶ ЗАВАНТАЖИТИ
-
-          </a>
-
-          <a href="#features" class="game-btn secondary">
-
-            МОЖЛИВОСТІ →
-
-          </a>
-
-        </div>
-
-        <div class="hero-stats">
-
-          <div class="stat-box">
-
-            <span class="stat-val">12.4K</span>
-
-            <span class="stat-label">КОРИСТУВАЧІ</span>
-
-          </div>
-
-          <div class="stat-box">
-
-            <span class="stat-val">v2.4</span>
-
-            <span class="stat-label">ВЕРСІЯ</span>
-
-          </div>
-
-          <div class="stat-box">
-
-            <span class="stat-val">БЕЗКОШТОВНО</span>
-
-            <span class="stat-label">ЛІЦЕНЗІЯ</span>
-
-          </div>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="hero-canvas-wrap">
-
-        <div class="console-frame">
-
-          <div class="console-top">
-
-            <span class="console-dot red"></span>
-
-            <span class="console-dot yellow"></span>
-
-            <span class="console-dot green"></span>
-
-            <span class="console-title">CANVAS_01.PIX</span>
-
-          </div>
-
-          <canvas id="doodle-canvas" width="480" height="320"></canvas>
-
-          <div class="console-bottom">
-
-            <span class="blink">▌</span> МАЛЮЙ ТУТ
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- Можливості -->
-
-    <section id="features" class="section">
-
-      <div class="section-header">
-
-        <span class="section-code">// 01</span>
-
-        <h2>МОЖЛИВОСТІ ВІДКРИТО</h2>
-
-        <div class="xp-bar">
-
-          <div class="xp-fill" style="width: 100%"></div>
-
-          <span class="xp-text">МАКСИМАЛЬНИЙ РІВЕНЬ</span>
-
-        </div>
-
-      </div>
-
-
-
-      <div class="skills-grid">
-
-        <article class="skill-card" data-search="пензлі тиск brush pressure">
-
-          <div class="skill-icon">🖌️</div>
-
-          <div class="skill-rank">SSR</div>
-
-          <h3>РОЗУМНІ ПЕНЗЛІ</h3>
-
-          <p>120+ пензлів. Тиск, нахил, обертання стилуса. Створюй власні за секунди.</p>
-
-          <div class="skill-bars">
-
-            <div class="bar"><span style="width:98%"></span></div>
-
-          </div>
-
-        </article>
-
-
-
-        <article class="skill-card" data-search="шари layers masks blending">
-
-          <div class="skill-icon">📑</div>
-
-          <div class="skill-rank">SSR</div>
-
-          <h3>НЕОБМЕЖЕНІ ШАРИ</h3>
-
-          <p>Групи, маски, режими накладання, коригувальні шари. Професійний рівень.</p>
-
-          <div class="skill-bars">
-
-            <div class="bar"><span style="width:95%"></span></div>
-
-          </div>
-
-        </article>
-
-
-
-        <article class="skill-card" data-search="вектор растр vector raster">
-
-          <div class="skill-icon">⬡</div>
-
-          <div class="skill-rank">SR</div>
-
-          <h3>ВЕКТОР І РАСТР</h3>
-
-          <p>Малюй растром → конвертуй у вектор. Перетворення наживо без втрат.</p>
-
-          <div class="skill-bars">
-
-            <div class="bar"><span style="width:92%"></span></div>
-
-          </div>
-
-        </article>
-
-
-
-        <article class="skill-card" data-search="анімація animation timeline">
-
-          <div class="skill-icon">🎬</div>
-
-          <div class="skill-rank">SR</div>
-
-          <h3>РЕЖИМ АНІМАЦІЇ</h3>
-
-          <p>Шкала часу, калька попереднього кадру, покадрова анімація. Експорт GIF / MP4 / sprites.</p>
-
-          <div class="skill-bars">
-
-            <div class="bar"><span style="width:90%"></span></div>
-
-          </div>
-
-        </article>
-
-
-
-        <article class="skill-card" data-search="колаборація multiplayer realtime">
-
-          <div class="skill-icon">👥</div>
-
-          <div class="skill-rank">SSR</div>
-
-          <h3>СПІЛЬНИЙ РЕЖИМ</h3>
-
-          <p>Спільне малювання в реальному часі. Курсори друзів та історія змін.</p>
-
-          <div class="skill-bars">
-
-            <div class="bar"><span style="width:88%"></span></div>
-
-          </div>
-
-        </article>
-
-
-
-        <article class="skill-card" data-search="експорт formats psd svg">
-
-          <div class="skill-icon">💾</div>
-
-          <div class="skill-rank">R</div>
-
-          <h3>БУДЬ-ЯКИЙ ФОРМАТ</h3>
-
-          <p>PSD · SVG · PDF · PNG · WebP · EXR. Імпорт/експорт без компромісів.</p>
-
-          <div class="skill-bars">
-
-            <div class="bar"><span style="width:100%"></span></div>
-
-          </div>
-
-        </article>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- Про програму -->
-
-    <section id="about" class="section">
-
-      <div class="section-header">
-
-        <span class="section-code">// 02</span>
-
-        <h2>ПРО ПРОГРАМУ</h2>
-
-      </div>
-
-
-
-      <div class="lore-panel">
-
-        <div class="lore-text">
-
-          <p class="lore-lead">Малювачка — це соло-творіння однієї жинки за допомогою vscodium, mingw, qt та codex з купою тестів.</p>
-
-          <p>Малювачка має свій власний формат, а також чимало функцій, які майже ніде не зустрічаються серед подібних програм. Вона початково є нішевим продуктом для вузької аудиторії.</p>
-
-          <p>Малювачка містить вектор, растр, різні формати для малювання, прикольні теми. А програма дозволяє завантажити ваші власні приколи.</p>
-
-
-
-          <div class="achievement-row">
-
-            <div class="achievement">
-
-              <span class="ach-icon">🏆</span>
-
-              <span class="ach-val">12K+</span>
-
-              <span class="ach-label">КОРИСТУВАЧІ</span>
-
-            </div>
-
-            <div class="achievement">
-
-              <span class="ach-icon">⭐</span>
-
-              <span class="ach-val">4.9</span>
-
-              <span class="ach-label">ОЦІНКА</span>
-
-            </div>
-
-            <div class="achievement">
-
-              <span class="ach-icon">🔓</span>
-
-              <span class="ach-val">100%</span>
-
-              <span class="ach-label">БЕЗКОШТОВНО</span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-        <div class="lore-visual">
-
-          <div class="pixel-portrait">
-
-            <div class="portrait-frame">
-
-              <div class="portrait-inner">
-
-                <span class="portrait-emoji">🎨</span>
-
-              </div>
-
-              <div class="portrait-label">АВТОРКА · 2024</div>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- Посібник -->
-
-    <section id="docs" class="section">
-
-      <div class="section-header">
-
-        <span class="section-code">// 03</span>
-
-        <h2>ПОСІБНИК КОРИСТУВАЧА</h2>
-
-      </div>
-
-
-
-      <div class="manual-grid">
-
-        <a href="#" class="manual-card" data-search="швидкий старт installation quickstart">
-
-          <span class="manual-num">01</span>
-
-          <h3>ШВИДКИЙ СТАРТ</h3>
-
-          <p>Встановлення · перший малюнок · гарячі клавіші за 5 хвилин</p>
-
-          <span class="manual-arrow">→</span>
-
-        </a>
-
-        <a href="#" class="manual-card" data-search="пензлі brushes settings">
-
-          <span class="manual-num">02</span>
-
-          <h3>ЛАБОРАТОРІЯ ПЕНЗЛІВ</h3>
-
-          <p>Створення пензлів · імпорт ABR · керування натиском</p>
-
-          <span class="manual-arrow">→</span>
-
-        </a>
-
-        <a href="#" class="manual-card" data-search="шари layers masks blending">
-
-          <span class="manual-num">03</span>
-
-          <h3>СИСТЕМА ШАРІВ</h3>
-
-          <p>Blending modes · clipping masks · коригувальні шари</p>
-
-          <span class="manual-arrow">→</span>
-
-        </a>
-
-        <a href="#" class="manual-card" data-search="анімація animation timeline">
-
-          <span class="manual-num">04</span>
-
-          <h3>АНІМАЦІЯ</h3>
-
-          <p>Шкала часу · калька попереднього кадру · експорт відео / GIF</p>
-
-          <span class="manual-arrow">→</span>
-
-        </a>
-
-        <a href="#" class="manual-card" data-search="скрипти api plugins scripting">
-
-          <span class="manual-num">05</span>
-
-          <h3>API СКРИПТІВ</h3>
-
-          <p>Автоматизація · плагіни · розширення JS API</p>
-
-          <span class="manual-arrow">→</span>
-
-        </a>
-
-        <a href="#" class="manual-card" data-search="гарячі клавіші shortcuts hotkeys">
-
-          <span class="manual-num">06</span>
-
-          <h3>ГАРЯЧІ КЛАВІШІ</h3>
-
-          <p>Повний список · налаштування під себе</p>
-
-          <span class="manual-arrow">→</span>
-
-        </a>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- Бібліотека ресурсів -->
-
-    <section id="shop" class="section">
-
-      <div class="section-header">
-
-        <span class="section-code">// 04</span>
-
-        <h2>БІБЛІОТЕКА РЕСУРСІВ</h2>
-
-        <p class="section-sub">БЕЗКОШТОВНО LOOT · NO PAYWALL</p>
-
-      </div>
-
-
-
-      <div class="inv-filters">
-
-        <button class="filter-chip active" data-filter="all">УСЕ</button>
-
-        <button class="filter-chip" data-filter="brushes">ПЕНЗЛІ</button>
-
-        <button class="filter-chip" data-filter="textures">ТЕКСТУРИ</button>
-
-        <button class="filter-chip" data-filter="templates">ШАБЛОНИ</button>
-
-      </div>
-
-
-
-      <div class="inv-grid" id="shop-grid">
-
-        <!-- Елементи додаються через JavaScript -->
-
-      </div>
-
-    </section>
-
-
-
-    <!-- Галерея -->
-
-    <section id="gallery" class="section">
-
-      <div class="section-header">
-
-        <span class="section-code">// 05</span>
-
-        <h2>ГАЛЕРЕЯ СПІЛЬНОТИ</h2>
-
-        <p class="section-sub">ТВОРИ КОРИСТУВАЧІВ · РЕПОЗИТОРІЙ GITHUB</p>
-
-      </div>
-
-
-
-      <div class="gallery-grid">
-
-        <figure class="gal-item" style="--h:200">
-
-          <div class="gal-img"></div>
-
-          <figcaption>@artem_k · МІСЬКИЙ ЕСКІЗ</figcaption>
-
-        </figure>
-
-        <figure class="gal-item" style="--h:340">
-
-          <div class="gal-img"></div>
-
-          <figcaption>@lena_draw · ПОРТРЕТ</figcaption>
-
-        </figure>
-
-        <figure class="gal-item" style="--h:140">
-
-          <div class="gal-img"></div>
-
-          <figcaption>@night_ink · ФЕНТЕЗІ</figcaption>
-
-        </figure>
-
-        <figure class="gal-item" style="--h:40">
-
-          <div class="gal-img"></div>
-
-          <figcaption>@line_form · АРХІТЕКТУРА</figcaption>
-
-        </figure>
-
-        <figure class="gal-item" style="--h:280">
-
-          <div class="gal-img"></div>
-
-          <figcaption>@panel_m · КОМІКС</figcaption>
-
-        </figure>
-
-        <figure class="gal-item" style="--h:10">
-
-          <div class="gal-img"></div>
-
-          <figcaption>@color_flow · АБСТРАКЦІЯ</figcaption>
-
-        </figure>
-
-      </div>
-
-
-
-      <div class="gallery-cta">
-
-        <a href="https://github.com" target="_blank" rel="noopener" class="game-btn secondary">
-
-          ПЕРЕГЛЯНУТИ ВСЕ НА GITHUB →
-
-        </a>
-
-      </div>
-
-    </section>
-
-
-
-    <!-- Завантаження / фінальний екран -->
-
-    <section id="download" class="section download-section">
-
-      <div class="end-screen">
-
-        <div class="end-header">
-
-          <span class="end-label">МІСІЮ ВИКОНАНО</span>
-
-          <h2>ЗАВАНТАЖИТИ МАЛЮВАЧКУ</h2>
-
-          <p>БЕЗКОШТОВНО · OPEN SOURCE · NO ADS · NO SUBSCRIPTION</p>
-
-        </div>
-
-
-
-        <div class="platform-buttons">
-
-          <a href="#" class="platform-btn" data-os="windows">
-
-            <span class="plat-icon">⊞</span>
-
-            <span class="plat-name">WINDOWS</span>
-
-            <span class="plat-size">\~85 MB</span>
-
-          </a>
-
-          <a href="#" class="platform-btn" data-os="macos">
-
-            <span class="plat-icon">⌘</span>
-
-            <span class="plat-name">macOS</span>
-
-            <span class="plat-size">\~92 MB</span>
-
-          </a>
-
-          <a href="#" class="platform-btn" data-os="linux">
-
-            <span class="plat-icon">🐧</span>
-
-            <span class="plat-name">LINUX</span>
-
-            <span class="plat-size">\~78 MB</span>
-
-          </a>
-
-        </div>
-
-
-
-        <p class="end-note">
-
-          Також доступно через <a href="#">Релізи GitHub</a> · <a href="#">Flathub</a>
-
-        </p>
-
-      </div>
-
-    </section>
-
-  </main>
-
-
-
-  <footer class="game-footer">
-
-    <div class="footer-inner">
-
-      <div class="footer-brand">
-
-        <span class="footer-logo">[DRAW.EXE]</span>
-
-        <p>ТВОРИ БЕЗ ОБМЕЖЕНЬ</p>
-
-      </div>
-
-      <div class="footer-links">
-
-        <a href="#features">МОЖЛИВОСТІ</a>
-
-        <a href="#docs">ПОСІБНИК</a>
-
-        <a href="#shop">РЕСУРСИ</a>
-
-        <a href="https://github.com" target="_blank" rel="noopener">GITHUB</a>
-
-      </div>
-
-      <div class="footer-copy">
-
-        <p>© 2025 МАЛЮВАЧКА · MIT ЛІЦЕНЗІЯ</p>
-
-      </div>
-
-    </div>
-
-  </footer>
-
-
-
-  <script src="js/main.js"></script>
-
+  <!-- Scanlines + CRT overlay -->
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <canvas id="starfield" aria-hidden="true"></canvas>
+
+  <!-- HUD TOP BAR -->
+  <header class="hud-bar">
+    <div class="hud-left">
+      <span class="hud-logo">
+        <span class="logo-bracket">[</span>
+        <span class="logo-text">DRAW.EXE</span>
+        <span class="logo-bracket">]</span>
+      </span>
+      <span class="hud-status">
+        <span class="status-dot"></span>
+        ONLINE
+      </span>
+    </div>
+
+    <nav class="hud-nav">
+      <a href="#hero" class="hud-link active" data-section="hero">START</a>
+      <a href="#features" class="hud-link" data-section="features">SKILLS</a>
+      <a href="#about" class="hud-link" data-section="about">LORE</a>
+      <a href="#docs" class="hud-link" data-section="docs">MANUAL</a>
+      <a href="#shop" class="hud-link" data-section="shop">INVENTORY</a>
+      <a href="#gallery" class="hud-link" data-section="gallery">GALLERY</a>
+    </nav>
+
+    <div class="hud-right">
+      <button class="hud-btn" id="search-toggle" title="Search">
+        <span class="hud-btn-icon">⌕</span>
+      </button>
+      <button class="hud-btn" id="theme-toggle" title="Theme">
+        <span class="theme-icon-dark">☾</span>
+        <span class="theme-icon-light">☀</span>
+      </button>
+      <a href="#download" class="hud-cta">DOWNLOAD</a>
+      <button class="burger" id="burger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Search terminal -->
+  <div class="search-terminal" id="search-panel">
+    <div class="terminal-header">
+      <span>> SEARCH_DATABASE.EXE</span>
+      <button class="terminal-close" id="search-close">×</button>
+    </div>
+    <input type="search" id="search-input" placeholder="type query..." autocomplete="off" />
+    <div class="search-results" id="search-results"></div>
+  </div>
+
+  <main>
+    <!-- HERO / TITLE SCREEN -->
+    <section id="hero" class="section hero">
+      <div class="hero-bg-grid"></div>
+      <div class="hero-content">
+        <div class="level-badge">SOLO BUILD · v2.128</div>
+        <h1 class="glitch" data-text="МАЛЮВАЧКА">МАЛЮВАЧКА</h1>
+        <p class="hero-tagline">PRESS START TO CREATE</p>
+        <p class="hero-desc">
+          Український інструмент цифрового малювання від одного автора.<br/>
+          Пензлі з натиском, шари, вектори Безьє, анімація з суглобами, комікси й PSD — у portable-збірці для Windows.
+        </p>
+        <div class="hero-buttons">
+          <a href="#download" class="game-btn primary">
+            <span class="btn-glow"></span>
+            ▶ ЗАВАНТАЖИТИ 2.128
+          </a>
+          <a href="#features" class="game-btn secondary">
+            SKILLS →
+          </a>
+        </div>
+        <div class="hero-stats">
+          <div class="stat-box">
+            <span class="stat-val">SOLO</span>
+            <span class="stat-label">PROJECT</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-val">2.128</span>
+            <span class="stat-label">BUILD</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-val">WIN</span>
+            <span class="stat-label">PORTABLE</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-canvas-wrap">
+        <div class="console-frame">
+          <div class="console-top">
+            <span class="console-dot red"></span>
+            <span class="console-dot yellow"></span>
+            <span class="console-dot green"></span>
+            <span class="console-title">CANVAS_01.PIX</span>
+          </div>
+          <canvas id="doodle-canvas" width="480" height="320"></canvas>
+          <div class="console-bottom">
+            <span class="blink">▌</span> DRAW HERE
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SKILLS / FEATURES -->
+    <section id="features" class="section">
+      <div class="section-header">
+        <span class="section-code">// 01</span>
+        <h2>SKILLS UNLOCKED</h2>
+        <div class="xp-bar">
+          <div class="xp-fill" style="width: 100%"></div>
+          <span class="xp-text">MAX LEVEL</span>
+        </div>
+      </div>
+
+      <div class="skills-grid">
+        <article class="skill-card" data-search="пензлі перо натиск brush pressure тонкі штампи">
+          <div class="skill-icon">🖌️</div>
+          <div class="skill-rank">CORE</div>
+          <h3>ПЕНЗЛІ Й ПЕРО</h3>
+          <p>Натиск пера, тверді/м’які краї, олівець і гумка. Тонкі розміри 0,1–0,9 px. Власні пензлі й набори .miymbrushes. Штампи: відстань, розкид, випадковий поворот.</p>
+          <div class="skill-bars"><div class="bar"><span style="width:96%"></span></div></div>
+        </article>
+
+        <article class="skill-card" data-search="шари папки blending modes видимість">
+          <div class="skill-icon">📑</div>
+          <div class="skill-rank">CORE</div>
+          <h3>ШАРИ Й ЗМІШУВАННЯ</h3>
+          <p>Шари, папки, видимість, непрозорість. Режими: звичайний, множення, екран, перекриття, темніше/світліше, жорстке/м’яке світло, різниця, виключення та ін.</p>
+          <div class="skill-bars"><div class="bar"><span style="width:92%"></span></div></div>
+        </article>
+
+        <article class="skill-card" data-search="вектор безьє вузли товщина vector bezier">
+          <div class="skill-icon">⬡</div>
+          <div class="skill-rank">CORE</div>
+          <h3>ВЕКТОРИ БЕЗЬЄ</h3>
+          <p>Контури з вузлами й ручками. Локальна товщина вузла (Alt + клік). Кеш і DPI узгоджені з растром. Збереження у .miym.</p>
+          <div class="skill-bars"><div class="bar"><span style="width:90%"></span></div></div>
+        </article>
+
+        <article class="skill-card" data-search="анімація кадри суглоби пози timeline rig">
+          <div class="skill-icon">🎬</div>
+          <div class="skill-rank">ADV</div>
+          <h3>АНІМАЦІЯ Й СУГЛОБИ</h3>
+          <p>Часова шкала, копії кадрів, переходи між позами. Суглоби на шарах, інтерполяція руху (рівномірний, ease-in/out). Експорт GIF. Ліміт ~64 кадри.</p>
+          <div class="skill-bars"><div class="bar"><span style="width:94%"></span></div></div>
+        </article>
+
+        <article class="skill-card" data-search="комікс сторінки pdf comic pages">
+          <div class="skill-icon">📰</div>
+          <div class="skill-rank">ADV</div>
+          <h3>КОМІКС-СТОРІНКИ</h3>
+          <p>Багатосторінкові документи: копія/перейменування/перестановка сторінок. Експорт багатосторінкового PDF (A5 landscape тощо).</p>
+          <div class="skill-bars"><div class="bar"><span style="width:88%"></span></div></div>
+        </article>
+
+        <article class="skill-card" data-search="psd імпорт експорт miym формати">
+          <div class="skill-icon">💾</div>
+          <div class="skill-rank">CORE</div>
+          <h3>PSD · .MIYM · PDF</h3>
+          <p>Імпорт/експорт PSD (RGB 8-bit, шари, однорівневі папки). Рідний .miym зберігає все. PDF для коміксів. Зведене зображення, якщо структура заскладна.</p>
+          <div class="skill-bars"><div class="bar"><span style="width:91%"></span></div></div>
+        </article>
+      </div>
+    </section>
+
+    <!-- LORE / ABOUT -->
+    <section id="about" class="section">
+      <div class="section-header">
+        <span class="section-code">// 02</span>
+        <h2>LORE</h2>
+      </div>
+
+      <div class="lore-panel">
+        <div class="lore-text">
+          <p class="lore-lead">Соло-проєкт. Один автор — увесь код, пензлі, анімація, PSD і збірка.</p>
+          <p>Малювачка зроблена для тих, хто хоче малювати й анімувати без підписок і важких «комбайнів». Portable-збірка для Windows: розпакував — запустив <code>miymalka.exe</code>. Під капотом Qt 6.9 і власний формат .miym.</p>
+          <p>Немає команди маркетингу й інвесторів — є регулярні оновлення (2.128: копії кадрів, локальна товщина вузлів Безьє, виправлення шарів і пера) і докладні тести в самій збірці.</p>
+
+          <div class="achievement-row">
+            <div class="achievement">
+              <span class="ach-icon">👤</span>
+              <span class="ach-val">1</span>
+              <span class="ach-label">AUTHOR</span>
+            </div>
+            <div class="achievement">
+              <span class="ach-icon">📦</span>
+              <span class="ach-val">2.128</span>
+              <span class="ach-label">VERSION</span>
+            </div>
+            <div class="achievement">
+              <span class="ach-icon">🪟</span>
+              <span class="ach-val">WIN</span>
+              <span class="ach-label">PORTABLE</span>
+            </div>
+          </div>
+        </div>
+        <div class="lore-visual">
+          <div class="pixel-portrait">
+            <div class="portrait-frame">
+              <div class="portrait-inner">
+                <span class="portrait-emoji">✏️</span>
+              </div>
+              <div class="portrait-label">SOLO · 2.128</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MANUAL / DOCS -->
+    <section id="docs" class="section">
+      <div class="section-header">
+        <span class="section-code">// 03</span>
+        <h2>PLAYER MANUAL</h2>
+      </div>
+
+      <div class="manual-grid">
+        <a href="#" class="manual-card" data-search="пензлі перо натиск тонкі штампи miymbrushes">
+          <span class="manual-num">01</span>
+          <h3>ПЕНЗЛІ ТА ПЕРО</h3>
+          <p>Натиск, непрозорість, тонкі 0,1–0,9 px · відстань / розкид / поворот штампів · .miymbrushes</p>
+          <span class="manual-arrow">→</span>
+        </a>
+        <a href="#" class="manual-card" data-search="анімація кадри суглоби пози переходи">
+          <span class="manual-num">02</span>
+          <h3>АНІМАЦІЯ</h3>
+          <p>Копії кадрів · суглоби на шарах · «Переходи…» між позами · GIF</p>
+          <span class="manual-arrow">→</span>
+        </a>
+        <a href="#" class="manual-card" data-search="вектор безьє товщина вузла alt">
+          <span class="manual-num">03</span>
+          <h3>ВЕКТОРИ</h3>
+          <p>Вузли Безьє · Alt + клік для локальної товщини · DPI-коректний кеш</p>
+          <span class="manual-arrow">→</span>
+        </a>
+        <a href="#" class="manual-card" data-search="psd шари папки імпорт експорт">
+          <span class="manual-num">04</span>
+          <h3>PSD</h3>
+          <p>RGB 8-bit · шари й однорівневі папки · зведене зображення при складних структурах</p>
+          <span class="manual-arrow">→</span>
+        </a>
+        <a href="#" class="manual-card" data-search="комікс сторінки pdf">
+          <span class="manual-num">05</span>
+          <h3>КОМІКС</h3>
+          <p>Кілька сторінок · перестановка · багатосторінковий PDF</p>
+          <span class="manual-arrow">→</span>
+        </a>
+        <a href="#" class="manual-card" data-search="вікна малюнків ctrl shift home">
+          <span class="manual-num">06</span>
+          <h3>ВІКНА</h3>
+          <p>Кілька малюнків · Повернути активне вікно (Ctrl+Shift+Home)</p>
+          <span class="manual-arrow">→</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- INVENTORY / SHOP -->
+    <section id="shop" class="section">
+      <div class="section-header">
+        <span class="section-code">// 04</span>
+        <h2>INVENTORY</h2>
+        <p class="section-sub">НАБОРИ ПЕНЗЛІВ · ПРИКЛАДИ · БЕЗКОШТОВНО</p>
+      </div>
+
+      <div class="inv-filters">
+        <button class="filter-chip active" data-filter="all">ALL</button>
+        <button class="filter-chip" data-filter="brushes">BRUSHES</button>
+        <button class="filter-chip" data-filter="textures">TEXTURES</button>
+        <button class="filter-chip" data-filter="templates">TEMPLATES</button>
+      </div>
+
+      <div class="inv-grid" id="shop-grid">
+        <!-- JS injects items -->
+      </div>
+    </section>
+
+    <!-- GALLERY -->
+    <section id="gallery" class="section">
+      <div class="section-header">
+        <span class="section-code">// 05</span>
+        <h2>COMMUNITY GALLERY</h2>
+        <p class="section-sub">РОБОТИ КОРИСТУВАЧІВ · РЕПОЗИТОРІЙ</p>
+      </div>
+
+      <div class="gallery-grid">
+        <figure class="gal-item" style="--h:200">
+          <div class="gal-img"></div>
+          <figcaption>@artem_k · CITY SKETCH</figcaption>
+        </figure>
+        <figure class="gal-item" style="--h:340">
+          <div class="gal-img"></div>
+          <figcaption>@lena_draw · PORTRAIT</figcaption>
+        </figure>
+        <figure class="gal-item" style="--h:140">
+          <div class="gal-img"></div>
+          <figcaption>@night_ink · FANTASY</figcaption>
+        </figure>
+        <figure class="gal-item" style="--h:40">
+          <div class="gal-img"></div>
+          <figcaption>@line_form · ARCH</figcaption>
+        </figure>
+        <figure class="gal-item" style="--h:280">
+          <div class="gal-img"></div>
+          <figcaption>@panel_m · COMIC</figcaption>
+        </figure>
+        <figure class="gal-item" style="--h:10">
+          <div class="gal-img"></div>
+          <figcaption>@color_flow · ABSTRACT</figcaption>
+        </figure>
+      </div>
+
+      <div class="gallery-cta">
+        <a href="https://github.com" target="_blank" rel="noopener" class="game-btn secondary">
+          VIEW ALL ON GITHUB →
+        </a>
+      </div>
+    </section>
+
+    <!-- DOWNLOAD / END SCREEN -->
+    <section id="download" class="section download-section">
+      <div class="end-screen">
+        <div class="end-header">
+          <span class="end-label">MISSION COMPLETE</span>
+          <h2>МАЛЮВАЧКА 2.128 PORTABLE</h2>
+          <p>WINDOWS · РОЗПАКУВАВ — ЗАПУСТИВ · БЕЗ ІНСТАЛЯТОРА</p>
+        </div>
+
+        <div class="platform-buttons">
+          <a href="#" class="platform-btn" data-os="windows">
+            <span class="plat-icon">⊞</span>
+            <span class="plat-name">WINDOWS</span>
+            <span class="plat-size">miymalka.exe · ~38 MB zip</span>
+          </a>
+        </div>
+
+        <p class="end-note">
+          Portable-збірка Qt 6.9 / MinGW. Розпакуй архів і запусти <strong>miymalka.exe</strong>. macOS / Linux у цій гілці поки немає.
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="game-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <span class="footer-logo">[DRAW.EXE]</span>
+        <p>SOLO · WINDOWS PORTABLE · v2.128</p>
+      </div>
+      <div class="footer-links">
+        <a href="#features">SKILLS</a>
+        <a href="#docs">MANUAL</a>
+        <a href="#shop">INVENTORY</a>
+        <a href="https://github.com" target="_blank" rel="noopener">GITHUB</a>
+      </div>
+      <div class="footer-copy">
+        <p>© МАЛЮВАЧКА 2.128 · SOLO PROJECT</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/main.js"></script>
 </body>
+</html>
